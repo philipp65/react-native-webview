@@ -543,6 +543,16 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     setupWebChromeClient((ReactContext)view.getContext(), view);
   }
 
+  @ReactProp(name = "skipSslErrors")
+  public void setSkipSslErrors(
+    WebView view,
+    @Nullable Boolean skipSslErrors) {
+    RNCWebViewClient client = ((RNCWebView) view).getRNCWebViewClient();
+    if (client != null && skipSslErrors != null) {
+      client.setSkipSslErrors(skipSslErrors);
+    }
+  }
+
   @ReactProp(name = "allowFileAccess")
   public void setAllowFileAccess(
     WebView view,
@@ -751,6 +761,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     ReadableArray mUrlPrefixesForDefaultIntent;
     protected RNCWebView.ProgressChangedFilter progressChangedFilter = null;
     protected @Nullable String ignoreErrFailedForThisURL = null;
+    protected @Nullable Boolean mSkipSslErrors = false;
 
     public void setIgnoreErrFailedForThisURL(@Nullable String url) {
       ignoreErrFailedForThisURL = url;
@@ -805,8 +816,9 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     @Override
     public void onReceivedSslError(final WebView webView, final SslErrorHandler handler, final SslError error) {
-        handler.cancel();
-
+      if (mSkipSslErrors) {
+        handler.proceed();
+      } else {
         int code = error.getPrimaryError();
         String failingUrl = error.getUrl();
         String description = "";
@@ -845,6 +857,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
           description,
           failingUrl
         );
+      }
     }
 
     @Override
@@ -961,6 +974,10 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     public void setUrlPrefixesForDefaultIntent(ReadableArray specialUrls) {
       mUrlPrefixesForDefaultIntent = specialUrls;
+    }
+
+    public void setSkipSslErrors(Boolean skipSslErrors) {
+      mSkipSslErrors = skipSslErrors;
     }
 
     public void setProgressChangedFilter(RNCWebView.ProgressChangedFilter filter) {
