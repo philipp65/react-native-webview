@@ -240,7 +240,12 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
     return webView;
   }
-
+  
+  @ReactProp(name = "getUserAgent")
+  public String getUserAgent(WebView view) {
+    return view.getSettings().getUserAgentString();
+  }
+  
   @ReactProp(name = "javaScriptEnabled")
   public void setJavaScriptEnabled(WebView view, boolean enabled) {
     view.getSettings().setJavaScriptEnabled(enabled);
