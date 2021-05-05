@@ -241,11 +241,6 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     return webView;
   }
   
-  @ReactProp(name = "spoofUserAgent")
-  public void spoofUserAgent(WebView view, boolean enabled) {
-    view.getSettings().setUserAgentString(view.getSettings().getUserAgentString().replace("; wv",""));
-  }
-  
   @ReactProp(name = "javaScriptEnabled")
   public void setJavaScriptEnabled(WebView view, boolean enabled) {
     view.getSettings().setJavaScriptEnabled(enabled);
@@ -360,7 +355,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     if(applicationName != null) {
       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         String defaultUserAgent = WebSettings.getDefaultUserAgent(view.getContext());
-        mUserAgentWithApplicationName = defaultUserAgent + " " + applicationName;
+        mUserAgentWithApplicationName = defaultUserAgent.replace("; wv","") + " " + applicationName;
       }
     } else {
       mUserAgentWithApplicationName = null;
