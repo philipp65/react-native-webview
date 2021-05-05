@@ -241,9 +241,9 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     return webView;
   }
   
-  @ReactProp(name = "getUserAgent")
-  public String getUserAgent(WebView view) {
-    return view.getSettings().getUserAgentString();
+  @ReactProp(name = "spoofUserAgent")
+  public String spoofUserAgent(WebView view, boolean enabled) {
+    view.getSettings().setUserAgentString(view.getSettings().getUserAgentString().replace('; wv',''));
   }
   
   @ReactProp(name = "javaScriptEnabled")
