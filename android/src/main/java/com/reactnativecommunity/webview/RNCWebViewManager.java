@@ -242,7 +242,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
   }
   
   @ReactProp(name = "spoofUserAgent")
-  public String spoofUserAgent(WebView view, boolean enabled) {
+  public void spoofUserAgent(WebView view, boolean enabled) {
     view.getSettings().setUserAgentString(view.getSettings().getUserAgentString().replace("; wv",""));
   }
   
