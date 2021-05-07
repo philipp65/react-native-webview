@@ -244,9 +244,7 @@ static NSDictionary* customCertificatesForHost;
 #endif // !TARGET_OS_OSX
 
   if (_applicationNameForUserAgent) {
-      NSLog(@"%@", wkWebViewConfig.applicationNameForUserAgent);
       wkWebViewConfig.applicationNameForUserAgent = [NSString stringWithFormat:@"%@ %@ %@", @"Safari/604.1", wkWebViewConfig.applicationNameForUserAgent, _applicationNameForUserAgent];
-      NSLog(@"%@", wkWebViewConfig.applicationNameForUserAgent);
   }
 
   return wkWebViewConfig;
