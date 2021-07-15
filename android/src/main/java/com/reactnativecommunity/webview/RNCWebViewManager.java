@@ -356,7 +356,6 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         String defaultUserAgent = WebSettings.getDefaultUserAgent(view.getContext());
         mUserAgentWithApplicationName = defaultUserAgent.replace("; wv", "") + " " + applicationName;
-        mUserAgentWithApplicationName = mUserAgentWithApplicationName.replace(" Mobile", " MobileBrowser");
       }
     } else {
       mUserAgentWithApplicationName = null;
